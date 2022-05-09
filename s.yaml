@@ -1,6 +1,5 @@
 edition: 1.0.0
 name: serverless-aialbum
-access: alibaba
 
 vars: # 全局变量
   region: cn-hangzhou
