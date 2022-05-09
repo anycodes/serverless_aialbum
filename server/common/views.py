@@ -39,9 +39,9 @@ responseBody = lambda body, error=False, requestId=False: JsonResponse({
 # 存储桶操作
 uploadUrl = "https://upload.aialbum.net"
 downloadUrl = "https://download.aialbum.net"
-baseUrl = "http://%s.%s" % (DEFAULT['oss']['endpoint'], DEFAULT['oss']['endpoint'])
+baseUrl = "http://%s.%s" % (DEFAULT['oss']['bucket'], DEFAULT['oss']['endpoint'])
 auth = oss2.Auth(DEFAULT['aliyun']['access_key_id'], DEFAULT['aliyun']['access_key_secret'])
-bucket = oss2.Bucket(auth, DEFAULT['oss']['endpoint'], DEFAULT['oss']['endpoint'])
+bucket = oss2.Bucket(auth, DEFAULT['oss']['endpoint'], DEFAULT['oss']['bucket'])
 object = lambda objectName, method="GET", expiry=3600: bucket.sign_url(method, objectName, expiry)
 upload = lambda objectName: object(objectName, "PUT").replace(baseUrl, uploadUrl)
 download = lambda objectName: object(objectName, method="GET").replace(baseUrl, downloadUrl)
