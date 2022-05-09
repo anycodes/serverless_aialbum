@@ -4,6 +4,24 @@ on:
   push:
     branches: [master]
 
+env:
+  ACCESS_ACCOUNT_ID: ${{secrets.ACCESS_ACCOUNT_ID}}
+  ACCESS_KEY_ID: ${{secrets.ACCESS_KEY_ID}}
+  ACCESS_KEY_SECRET: ${{secrets.ACCESS_KEY_SECRET}}
+  MINIPROGRAM_APPID: ${{secrets.MINIPROGRAM_APPID}}
+  MINIPROGRAM_SECRET: ${{secrets.MINIPROGRAM_SECRET}}
+  OSS_BUCKET: ${{secrets.OSS_BUCKET}}
+  OSS_ENDPOINT: ${{secrets.OSS_ENDPOINT}}
+  RDS_HOST: ${{secrets.RDS_HOST}}
+  RDS_NAME: ${{secrets.RDS_NAME}}
+  RDS_PASSWORD: ${{secrets.RDS_PASSWORD}}
+  RDS_PORT: ${{secrets.RDS_PORT}}
+  RDS_USER: ${{secrets.RDS_USER}}
+  REDIS_LOCATION: ${{secrets.REDIS_LOCATION}}
+  REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
+  UPDATE_TOKEN: ${{secrets.UPDATE_TOKEN}}
+
+
 jobs:
   serverless-devs-cd:
     runs-on: ubuntu-latest
