@@ -24,7 +24,7 @@ from server.photo import photoPhotoSharePhoto, photoPhotoShareViewers, photoPhot
     photoUpdateStatus, photoSearch
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     # 通用接口
     path('sentence', commonSentence),  # 每日名言
     # 用户接口
