@@ -1,7 +1,7 @@
 from django.db import models
 from photo.models import Photo
 from user.models import User
-from common import Tag
+from common.models import Tag
 
 
 # Create your models here.
