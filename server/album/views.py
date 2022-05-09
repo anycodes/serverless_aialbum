@@ -1,10 +1,10 @@
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 
-from common import Tag
-from album import Album, UserAlbum
+from common.models import Tag
+from album.models import Album, UserAlbum
 from user.models import User, UserRelationship
-from user import checkLogin
+from user.views import checkLogin
 from common.views import responseBody, ERROR, download
 
 import json
