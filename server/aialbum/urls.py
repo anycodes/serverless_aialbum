@@ -16,10 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from user import userBasic, userLoginQRCode, userLoginToken, userRelationshipBasic, userRelationships
+from user.views import userBasic, userLoginQRCode, userLoginToken, userRelationshipBasic, userRelationships
 from common.views import commonSentence
-from album import albumBasic, albumCreate, albumUserAlbum, albumAlbumViewers, albumAlbums
-from photo import photoPhotoSharePhoto, photoPhotoShareViewers, photoPhotoShares, photoPhotoShareCreate, \
+from album.views import albumBasic, albumCreate, albumUserAlbum, albumAlbumViewers, albumAlbums
+from photo.views import photoPhotoSharePhoto, photoPhotoShareViewers, photoPhotoShares, photoPhotoShareCreate, \
     photoPhotoShareBasic, photoPhotoViewers, photoPhotos, photoBasic, photoUpload, albumAlbumPhotos, \
     photoUpdateStatus, photoSearch
 
