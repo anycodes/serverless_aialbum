@@ -1,5 +1,5 @@
 from django.contrib import admin
-from server.photo.models import Photo, PhotoShare
+from photo.models import Photo, PhotoShare
 
 
 # Register your models here.

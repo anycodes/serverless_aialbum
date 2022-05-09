@@ -1,5 +1,5 @@
 from django.contrib import admin
-from server.common import Tag
+from common import Tag
 
 # Register your models here.
 

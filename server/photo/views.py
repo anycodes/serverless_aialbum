@@ -1,12 +1,12 @@
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 
-from server.user.models import UserRelationship
-from server.user import checkLogin
-from server.album import getUserInfo
-from server.common.views import responseBody, ERROR, upload, download, randomeStr, DEFAULT
-from server.photo.models import Photo, PhotoShare
-from server.album import Album, UserAlbum
+from user.models import UserRelationship
+from user import checkLogin
+from album import getUserInfo
+from common.views import responseBody, ERROR, upload, download, randomeStr, DEFAULT
+from photo.models import Photo, PhotoShare
+from album import Album, UserAlbum
 
 import json
 

@@ -1,0 +1,1 @@
+from aialbum.wsgi import application

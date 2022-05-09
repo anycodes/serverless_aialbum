@@ -1,9 +1,9 @@
 from django.views.decorators.csrf import csrf_exempt
 
-from server.album import Album, UserAlbum
-from server.photo.models import Photo, PhotoShare
-from server.user.models import User, UserRelationship
-from server.common.views import responseBody, getMD5, randomeStr, ERROR, DEFAULT, redic_conn, getAccessToken
+from album import Album, UserAlbum
+from photo.models import Photo, PhotoShare
+from user.models import User, UserRelationship
+from common.views import responseBody, getMD5, randomeStr, ERROR, DEFAULT, redic_conn, getAccessToken
 
 import json
 import base64

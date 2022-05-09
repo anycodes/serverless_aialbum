@@ -1,5 +1,5 @@
 from django.contrib import admin
-from server.user.models import User, UserRelationship
+from user.models import User, UserRelationship
 
 # Register your models here.
 

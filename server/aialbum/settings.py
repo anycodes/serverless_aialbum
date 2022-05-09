@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!gon+5zf8ze06xf7tlrq3i(vi1y4o2k(w0&3o&k&35n=t&pg0%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = Falsegit
+DEBUG = False
 
 ALLOWED_HOSTS = ["server.aialbum.net", '127.0.0.1']
 
