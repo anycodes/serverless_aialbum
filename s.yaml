@@ -109,7 +109,7 @@ services:
           DOMAIN: ${server.props.customDomains[0].domainName}
       triggers:
         - name: triggers
-          sourceArn: acs:oss:cn-hangzhou:1583208943291465:serverless_aialbum
+          sourceArn: acs:oss:cn-hangzhou:${config(AccountID)}:${env(OSS_BUCKET)}
           type: oss
           config:
             events:
@@ -141,7 +141,7 @@ services:
           DOMAIN: ${server.props.customDomains[0].domainName}
       triggers:
         - name: triggers
-          sourceArn: acs:oss:cn-hangzhou:1583208943291465:serverless_aialbum
+          sourceArn: acs:oss:cn-hangzhou:${config(AccountID)}:${env(OSS_BUCKET)}
           type: oss
           config:
             events:
