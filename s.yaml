@@ -41,52 +41,52 @@ vars: # 全局变量
 
 
 services:
-#  server: # 业务名称/模块名称
-#    component: fc
-#    props: # 组件的属性值
-#      region: ${vars.region}
-#      service: ${vars.service}
-#      function:
-#        name: server
-#        description: '核心业务逻辑'
-#        codeUri: './server'
-#        runtime: python3
-#        handler: app.application
-#        timeout: 60
-#        memorySize: 1600
-#        environmentVariables:
-#          PYTHONUSERBASE:  /opt
-#          ACCESS_KEY_ID: ${vars.environmentVariables.ACCESS_KEY_ID}
-#          ACCESS_KEY_SECRET: ${vars.environmentVariables.ACCESS_KEY_SECRET}
-#          MINIPROGRAM_APPID: ${vars.environmentVariables.MINIPROGRAM_APPID}
-#          MINIPROGRAM_SECRET: ${vars.environmentVariables.MINIPROGRAM_SECRET}
-#          OSS_BUCKET: ${vars.environmentVariables.OSS_BUCKET}
-#          OSS_ENDPOINT: ${vars.environmentVariables.OSS_ENDPOINT}
-#          RDS_HOST: ${vars.environmentVariables.RDS_HOST}
-#          RDS_NAME: ${vars.environmentVariables.RDS_NAME}
-#          RDS_PASSWORD: ${vars.environmentVariables.RDS_PASSWORD}
-#          RDS_PORT: ${vars.environmentVariables.RDS_PORT}
-#          RDS_USER: ${vars.environmentVariables.RDS_USER}
-#          REDIS_LOCATION: ${vars.environmentVariables.REDIS_LOCATION}
-#          REDIS_PASSWORD: ${vars.environmentVariables.REDIS_PASSWORD}
-#          UPDATE_TOKEN: ${vars.environmentVariables.UPDATE_TOKEN}
-#        layers:
-#          - 544c887879c38e5d0afcaf8b4f8f348e#aialbum-server#1
-#      triggers:
-#        - name: httpTrigger
-#          type: http
-#          config:
-#            authType: anonymous
-#            methods:
-#              - GET
-#              - POST
-#              - DELETE
-#              - PUT
-#      customDomains:
-#        - domainName: server.aialbum.net
-#          protocol: HTTP
-#          routeConfigs:
-#            - path: '/*'
+  server: # 业务名称/模块名称
+    component: fc
+    props: # 组件的属性值
+      region: ${vars.region}
+      service: ${vars.service}
+      function:
+        name: server
+        description: '核心业务逻辑'
+        codeUri: './server'
+        runtime: python3
+        handler: app.application
+        timeout: 60
+        memorySize: 1600
+        environmentVariables:
+          PYTHONUSERBASE:  /opt
+          ACCESS_KEY_ID: ${vars.environmentVariables.ACCESS_KEY_ID}
+          ACCESS_KEY_SECRET: ${vars.environmentVariables.ACCESS_KEY_SECRET}
+          MINIPROGRAM_APPID: ${vars.environmentVariables.MINIPROGRAM_APPID}
+          MINIPROGRAM_SECRET: ${vars.environmentVariables.MINIPROGRAM_SECRET}
+          OSS_BUCKET: ${vars.environmentVariables.OSS_BUCKET}
+          OSS_ENDPOINT: ${vars.environmentVariables.OSS_ENDPOINT}
+          RDS_HOST: ${vars.environmentVariables.RDS_HOST}
+          RDS_NAME: ${vars.environmentVariables.RDS_NAME}
+          RDS_PASSWORD: ${vars.environmentVariables.RDS_PASSWORD}
+          RDS_PORT: ${vars.environmentVariables.RDS_PORT}
+          RDS_USER: ${vars.environmentVariables.RDS_USER}
+          REDIS_LOCATION: ${vars.environmentVariables.REDIS_LOCATION}
+          REDIS_PASSWORD: ${vars.environmentVariables.REDIS_PASSWORD}
+          UPDATE_TOKEN: ${vars.environmentVariables.UPDATE_TOKEN}
+        layers:
+          - 544c887879c38e5d0afcaf8b4f8f348e#aialbum-server#1
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+      customDomains:
+        - domainName: server.aialbum.net
+          protocol: HTTP
+          routeConfigs:
+            - path: '/*'
   update-lifecycle: # 业务名称/模块名称
     component: fc
     props: # 组件的属性值
@@ -108,7 +108,7 @@ services:
           UPDATE_TOKEN: ${vars.environmentVariables.UPDATE_TOKEN}
           DOMAIN: ${server.props.customDomains[0].domainName}
       triggers:
-        - name: triggers
+        - name: update-lifecycle
           sourceArn: acs:oss:cn-hangzhou:${config(AccountID)}:${env(OSS_BUCKET)}
           type: oss
           config:
@@ -140,7 +140,7 @@ services:
           UPDATE_TOKEN: ${vars.environmentVariables.UPDATE_TOKEN}
           DOMAIN: ${server.props.customDomains[0].domainName}
       triggers:
-        - name: triggers
+        - name: asynchronous-main-flow
           sourceArn: acs:oss:cn-hangzhou:${config(AccountID)}:${env(OSS_BUCKET)}
           type: oss
           config:
