@@ -8,7 +8,6 @@ import random
 import math
 import imghdr
 import exifread
-import cv2 as cv
 import urllib.request
 import urllib.parse
 import pyheif
@@ -230,7 +229,7 @@ def handler(event, context):
         file_token = file.split('/')[-1]
         origin_file = 'origin/' + file_token
         target_file = 'thumbnail/' + file_token
-        local_source_file = '/tmp/' + file_token
+        local_source_file = '/tmp/' + file_token + '.png'
         local_target_file = '/tmp/target_' + file_token
 
         headers = {
@@ -283,9 +282,6 @@ def handler(event, context):
                 layer.paste(mark, (int(image_width / 2 - temp_length / 2),
                                    int(image_height / 2 - int(mark_height * temp_length / mark_width) / 2)),
                             mark)  # 数值根据水印 size
-                width = 220
-                height = layer.size[1] / (layer.size[0] / width)
-                layer = layer.resize((int(width), int(height)), Image.ANTIALIAS)
                 layer.save(local_source_file, "PNG")
             except Exception as e:
                 print("视频，进行关键帧提取 Error: ", e)
@@ -296,7 +292,7 @@ def handler(event, context):
             doRequest(data, headers)
 
             # 尝试图像转换
-            local_caption_file = local_target_file = '/tmp/caption_' + file_token
+            local_caption_file = '/tmp/caption_' + file_token
             with open(local_source_file, 'rb') as f:
                 file_data = f.read()
             fmt = whatimage.identify_image(file_data)
@@ -304,36 +300,24 @@ def handler(event, context):
                 try:
                     heif_file = pyheif.read_heif(local_source_file)
                     image = Image.frombytes(mode=heif_file.mode, size=heif_file.size, data=heif_file.data)
-                    # 将要存储的路径及名称
-                    path, filename = os.path.split(local_source_file)
-                    name, ext = os.path.splitext(filename)
-                    # 缩略图（原始图片太大了，换成1080x1440）
-                    # image.thumbnail((1080, 1440))
-                    # 保存图片（JPEG格式）
-                    image.save(local_source_file, "JPEG")
+                    image.save(local_source_file, "PNG")
                 except Exception as e:
                     print("HEIC Error: ", e)
-                exchangeImage = local_source_file
-            elif fmt == 'png':
-                try:
-                    Image.open(local_source_file).save(local_target_file, "JPEG")
-                    exchangeImage = local_target_file
-                except Exception as e:
-                    exchangeImage = local_source_file
-                    print("PHN->JPG Error: ", e)
-            elif fmt in ['jpg', 'jpeg']:
-                pass
             else:
                 try:
-                    img = Image.open(local_source_file)
-                    img.save(local_source_file, "JPEG")
+                    Image.open(local_source_file).save(local_source_file, "PNG")
                 except Exception as e:
-                    print("Other Format Error: ", e)
-                exchangeImage = local_source_file
+                    print("JPG->PNG Error: ", e)
+
+            # 预测需要JPRG格式
+            try:
+                Image.open(local_source_file).save(local_caption_file, "JPEG")
+            except Exception as e:
+                print("PNG->JPEG Error: ", e)
 
             try:
                 # caption
-                data = DataSet([0], [exchangeImage], config.batch_size)
+                data = DataSet([0], [local_caption_file], config.batch_size)
                 batch = data.next_batch()
                 caption_data = model.beam_search(sess, batch, vocabulary)
                 word_idxs = caption_data[0][0].sentence
@@ -361,15 +345,19 @@ def handler(event, context):
             except Exception as e:
                 print("Image Caption Error: ", e)
 
-        # 图片压缩
+
+        # 最后统一进行图片压缩
         try:
-            image = Image.open(local_source_file)
+            temp_command = './pngquant --quality %s-%s --speed %s %s' % ('30', '40', '3', local_source_file)
+            print("command: ", temp_command)
+            os.system(temp_command)
+            local_target_file = local_source_file.replace(".png", '-fs8.png')
+            image = Image.open(local_target_file)
             # print("Compress origin: ", image.size)
             width = 220
             height = image.size[1] / (image.size[0] / width)
             imageObj = image.resize((int(width), int(height)), Image.ANTIALIAS)
-            imageObj.save(local_target_file, "JPEG", optimize=True, quality=20)
-            # print("Compress target: ", imageObj.size)
+            imageObj.save(local_target_file, "PNG", optimize=True, quality=80)
             # 回传图片
             bucket.put_object_from_file(target_file, local_target_file)
         except Exception as e:
